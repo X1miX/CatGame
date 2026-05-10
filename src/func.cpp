@@ -12,7 +12,7 @@ int main()
     win.setFramerateLimit(60);
 
     sf::Texture catTexture;
-    if (!catTexture.loadFromFile("kitty.png"))
+    if (!catTexture.loadFromFile("images/kitty.png"))
         return -1;
 
     int frameW = 180;
