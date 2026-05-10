@@ -1,0 +1,14 @@
+#Компилируемые файлы
+*.o
+*.exe
+*.out
+*.obj
+
+#IDE файлы
+.vscode/
+.idea/
+*.swp
+
+#Файлы операционной системы
+.DS_Store
+Thumbs.db
