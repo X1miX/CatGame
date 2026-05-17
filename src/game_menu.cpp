@@ -1,0 +1,44 @@
+#include <SFML/Graphics.hpp>
+#include "game_menu.h"
+
+void setInitText(sf::Text& text, sf::String str, float xpos, float ypos, 
+                 sf::Font& font, int size_font, sf::Color menu_text_color, 
+                 sf::Color border_color)
+{
+    text.setFont(font);
+    text.setFillColor(menu_text_color);
+    text.setString(str);
+    text.setCharacterSize(size_font);
+    text.setPosition(xpos, ypos);
+    text.setOutlineThickness(3);
+    text.setOutlineColor(border_color);
+}
+
+void initGameMenu(GameMenuData& menu, sf::RenderWindow& window, float menux, float menuy,
+                  int index, sf::String name[], int sizeFont, int step)
+{
+    menu.mywindow = &window;
+    menu.menu_X = menux;
+    menu.menu_Y = menuy;
+    menu.size_font = sizeFont;
+    menu.menu_Step = step;
+    menu.max_menu = index;
+    menu.menu_text_color = sf::Color::White;
+    menu.chose_text_color = sf::Color::Yellow;
+    menu.border_color = sf::Color::Black;
+    
+    // Загрузка шрифта
+    if (!menu.font.loadFromFile("font/troika.otf")) exit(32);
+    
+    // Создание массива пунктов меню
+    menu.mainMenu = new sf::Text[menu.max_menu];
+    
+    // Выстраивание элементов меню
+    for (int i = 0, ypos = menu.menu_Y; i < menu.max_menu; i++, ypos += menu.menu_Step) {
+        setInitText(menu.mainMenu[i], name[i], menu.menu_X, ypos, 
+                   menu.font, menu.size_font, menu.menu_text_color, menu.border_color);
+    }
+    
+    menu.mainMenuSelected = 0;
+    menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
+}
