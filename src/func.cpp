@@ -114,7 +114,7 @@ int main()
                 keyTimer.restart();
             }
         }
-        else
+        if(keyAlive&&keyStarted)
         {
             if (keyTimer.getElapsedTime().asSeconds() > keySwitchTime)
             {
@@ -131,8 +131,12 @@ int main()
                 keyTimer.restart();
             }
         }
-        if(get
-
+        if(getCatHitbox(cat).intersects(key.getGlobalBounds())){
+        keyAlive=false;
+        keyFrameIdx = -1;
+        keyRect.left = keyFrameIdx * keyFrameWidth;
+        key.setTextureRect(keyRect);
+        }
         handleInput(cat, isMoving, velocityX, velocityY, onGround, jumpStrength, jumpClock);
 
         if (onGround)
