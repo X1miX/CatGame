@@ -42,6 +42,7 @@ int main()
     int totalFrames = 4;
     int currentFrame = 0;
     float animSpeed = 0.15f;
+    bool way = true;
 
     sf::Vector2f spawnpoint(100.f, 700.f);
     sf::Sprite BackGround(background);
@@ -64,9 +65,11 @@ int main()
     bool isMoving = false;
 
     bool keyStarted = false;
+    bool keyAlive = true;
+    bool keyAnim = true;
     int keyFrameCount = 12;
     float keyFrameWidth = 100.f;
-    float keySwitchTime = 0.15f;
+    float keySwitchTime = 0.2f;
     sf::Clock keyTimer;
     int keyFrameIdx = keyFrameCount - 1;
     sf::IntRect keyRect(1100, 0, 100, 200);
@@ -106,17 +109,34 @@ int main()
                 keyRect.left = keyFrameIdx * keyFrameWidth;
                 key.setTextureRect(keyRect);
                 keyFrameIdx--;
-                if (keyFrameIdx < 0)
+                if (keyFrameIdx < 1)
                     keyStarted = true;
                 keyTimer.restart();
             }
         }
+        else
+        {
+            if (keyTimer.getElapsedTime().asSeconds() > keySwitchTime)
+            {
+                keyRect.left = keyFrameIdx * keyFrameWidth;
+                key.setTextureRect(keyRect);
+                if(way)
+                keyFrameIdx++;
+                else
+                keyFrameIdx--;
+                if(keyFrameIdx==0)
+                way = true;
+                if(keyFrameIdx==3)
+                way = false;
+                keyTimer.restart();
+            }
+        }
+        if(get
 
         handleInput(cat, isMoving, velocityX, velocityY, onGround, jumpStrength, jumpClock);
 
         if (onGround)
             velocityY = 0.0f;
-
         applyPhysics(cat, velocityY, gravity);
         handlePlatformCollisions(cat, platforms, velocityX, velocityY, onGround);
         checkSpikeCollisions(cat, spikes, spawnpoint, velocityY);
