@@ -42,3 +42,10 @@ void initGameMenu(GameMenuData& menu, sf::RenderWindow& window, float menux, flo
     menu.mainMenuSelected = 0;
     menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
 }
+
+void drawMenu(GameMenuData& menu)
+{
+    for (int i = 0; i < menu.max_menu; i++) {
+        menu.mywindow->draw(menu.mainMenu[i]);
+    }
+}
