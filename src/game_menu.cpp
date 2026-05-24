@@ -82,3 +82,17 @@ int getSelectedMenuNumber(GameMenuData& menu)
 {
     return menu.mainMenuSelected;
 }
+
+void setMenuColors(GameMenuData& menu, sf::Color menColor, sf::Color ChoColor, sf::Color BordColor)
+{
+    menu.menu_text_color = menColor;
+    menu.chose_text_color = ChoColor;
+    menu.border_color = BordColor;
+    
+    for (int i = 0; i < menu.max_menu; i++) {
+        menu.mainMenu[i].setFillColor(menu.menu_text_color);
+        menu.mainMenu[i].setOutlineColor(menu.border_color);
+    }
+    
+    menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
+}
