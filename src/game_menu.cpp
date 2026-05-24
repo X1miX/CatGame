@@ -28,7 +28,7 @@ void initGameMenu(GameMenuData& menu, sf::RenderWindow& window, float menux, flo
     menu.border_color = sf::Color::Black;
     
     // Загрузка шрифта
-    if (!menu.font.loadFromFile("font/troika.otf")) exit(32);
+    if (!menu.font.loadFromFile("fonts/troika.otf")) exit(32);
     
     // Создание массива пунктов меню
     menu.mainMenu = new sf::Text[menu.max_menu];
