@@ -77,3 +77,8 @@ void moveMenuDown(GameMenuData& menu)
         menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
     }
 }
+
+int getSelectedMenuNumber(GameMenuData& menu)
+{
+    return menu.mainMenuSelected;
+}

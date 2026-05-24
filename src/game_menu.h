@@ -22,3 +22,4 @@ void drawMenu(GameMenuData& menu);
 
 void moveMenuUp(GameMenuData& menu);
 void moveMenuDown(GameMenuData& menu);
+int getSelectedMenuNumber(GameMenuData& menu);
