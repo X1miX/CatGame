@@ -17,5 +17,8 @@ struct GameMenuData {
 
 void initGameMenu(GameMenuData& menu, sf::RenderWindow& window, float menux, float menuy,
                   int index, sf::String name[], int sizeFont = 60, int step = 80);
-                  
+
 void drawMenu(GameMenuData& menu);
+
+void moveMenuUp(GameMenuData& menu);
+void moveMenuDown(GameMenuData& menu);

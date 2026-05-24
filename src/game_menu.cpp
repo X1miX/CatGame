@@ -49,3 +49,31 @@ void drawMenu(GameMenuData& menu)
         menu.mywindow->draw(menu.mainMenu[i]);
     }
 }
+
+void moveMenuUp(GameMenuData& menu)
+{
+    menu.mainMenuSelected--;
+    
+    if (menu.mainMenuSelected >= 0) {
+        menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
+        menu.mainMenu[menu.mainMenuSelected + 1].setFillColor(menu.menu_text_color);
+    } else {
+        menu.mainMenu[0].setFillColor(menu.menu_text_color);
+        menu.mainMenuSelected = menu.max_menu - 1;
+        menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
+    }
+}
+
+void moveMenuDown(GameMenuData& menu)
+{
+    menu.mainMenuSelected++;
+    
+    if (menu.mainMenuSelected < menu.max_menu) {
+        menu.mainMenu[menu.mainMenuSelected - 1].setFillColor(menu.menu_text_color);
+        menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
+    } else {
+        menu.mainMenu[menu.max_menu - 1].setFillColor(menu.menu_text_color);
+        menu.mainMenuSelected = 0;
+        menu.mainMenu[menu.mainMenuSelected].setFillColor(menu.chose_text_color);
+    }
+}
