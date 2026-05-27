@@ -1,27 +1,26 @@
-TARGET = /src/f.out
+TARGET = $(BUILDDIR)/CatGame
 
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -Isrc
-
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
-SRC_DIR = src
-BUILD_DIR = build
+SRCDIR = src
+BUILDDIR = build
 
-SRCS = $(filter-out $(SRC_DIR)/tests.cpp, $(wildcard $(SRC_DIR)/*.cpp))
+SOURCES = $(SRCDIR)/movement.cpp $(SRCDIR)/objects.cpp $(SRCDIR)/func.cpp
+OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 
-OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+all: $(BUILDDIR) $(TARGET)
 
-all: $(TARGET)
+$(BUILDDIR):
+	mkdir -p $@
 
-$(TARGET): $(OBJS)
-	$(CXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
+$(TARGET): $(OBJECTS) | $(BUILDDIR)
+	$(CXX) -o $@ $^ $(LDFLAGS)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
+	$(CXX) -c $< -o $@
 
 clean:
-	rm -rf $(BUILD_DIR) $(TARGET)
+	rm -rf $(BUILDDIR) $(TARGET)
 
 .PHONY: all clean
