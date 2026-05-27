@@ -20,7 +20,7 @@ int main()
     String name_menu[]{ L"Старт", L"Выход" };
 
     GameMenuData mymenu;
-    initGameMenu(mymenu, window, 550, 150, 4, name_menu, 100, 120);
+    initGameMenu(mymenu, window, 550, 250, 2, name_menu, 100, 120);
     setMenuColors(mymenu, Color::Yellow, Color::Red, Color::Black);
 
     while (window.isOpen())
@@ -28,6 +28,9 @@ int main()
         Event event;
         while (window.pollEvent(event))
         {
+            if (event.type == Event::Closed)
+                window.close();
+
             if (event.type == Event::KeyReleased)
             {
                 if (event.key.code == Keyboard::Up) { moveMenuUp(mymenu); }
