@@ -9,6 +9,8 @@ BUILDDIR = build
 SOURCES = $(SRCDIR)/movement.cpp $(SRCDIR)/objects.cpp $(SRCDIR)/func.cpp
 OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 
+CXX_FILES = $(wildcard $(SRCDIR)/*.cpp $(SRCDIR)/*.h)
+
 all: $(BUILDDIR) $(TARGET)
 
 $(BUILDDIR):
@@ -19,6 +21,9 @@ $(TARGET): $(OBJECTS) | $(BUILDDIR)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
 	$(CXX) -c $< -o $@
+
+format:
+	@clang-format -i $(CXX_FILES)
 
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
