@@ -28,4 +28,8 @@ format:
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
 
-.PHONY: all clean
+update:
+	sudo apt-get update 
+	sudo apt-get install -y clang-format
+
+.PHONY: all clean format update
