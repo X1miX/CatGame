@@ -9,9 +9,8 @@ BUILDDIR = build
 
 
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
-
-OBJECTS = $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
-
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SOURCES))
+CXX_FILES = $(wildcard $(SRCDIR)/*cpp $(SRCDIR)/*.h)
 
 all: $(BUILDDIR) $(TARGET)
 
@@ -34,6 +33,9 @@ run: all
 
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
+
+format:
+	clang-format -i $(CXX_FILES)
 
 update:
 	sudo apt-get update 
