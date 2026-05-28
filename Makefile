@@ -1,31 +1,38 @@
 TARGET = $(BUILDDIR)/CatGame
 
 CXX = g++
+# Флаги линковки SFML
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 SRCDIR = src
 BUILDDIR = build
 
-SOURCES = $(SRCDIR)/movement.cpp $(SRCDIR)/objects.cpp $(SRCDIR)/func.cpp
-OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
+# Ищем ВСЕ файлы .cpp в папке src
+SOURCES = $(wildcard $(SRCDIR)/*.cpp)
+# Превращаем пути .cpp в пути .o в папке build
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
 
-CXX_FILES = $(wildcard $(SRCDIR)/*.cpp $(SRCDIR)/*.h)
-
+# Главная цель
 all: $(BUILDDIR) $(TARGET)
 
+# Создание папки build
 $(BUILDDIR):
 	mkdir -p $@
 
-$(TARGET): $(OBJECTS) | $(BUILDDIR)
+# Сборка экзешника
+$(TARGET): $(OBJECTS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
+# Компиляция каждого файла отдельно
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) -c $< -o $@
 
-format:
-	@clang-format -i $(CXX_FILES)
+# Команда для запуска: соберет всё и откроет игру
+run: all
+	./$(TARGET)
 
+# Очистка проекта (выполни make clean, если всё сломалось)
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
 
-.PHONY: all clean
+.PHONY: all clean run
