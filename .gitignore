@@ -1,14 +1,21 @@
-#Компилируемые файлы
-*.o
-*.exe
-*.out
-*.obj
+build/
 
-#IDE файлы
+**/*.o
+**/*.obj
+
+**/*.out
+**/*.exe
+
 .vscode/
 .idea/
 *.swp
+*.swo
+*~
 
-#Файлы операционной системы
 .DS_Store
 Thumbs.db
+
+**/*.so
+**/*.dll
+**/*.a
+**/*.lib
