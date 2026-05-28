@@ -2,12 +2,10 @@
 #include "movement.h"
 #include "objects.h"
 
-// Функция возвращает оригинальный "крупный" масштаб текстур, как было у тебя
+
 sf::Sprite createScaledPlatform(float x, float y, float visualWidth, float visualHeight, sf::Texture &tex, float scale = 4.0f) {
     sf::Sprite p;
     p.setTexture(tex);
-    // Делим визуальный размер на масштаб, чтобы текстура обрезалась правильно, 
-    // а потом жестко увеличиваем её через setScale (получаются крупные пиксели/камни)
     p.setTextureRect(sf::IntRect(0, 0, static_cast<int>(visualWidth / scale), static_cast<int>(visualHeight / scale)));
     p.setPosition(x, y);
     p.setScale(scale, scale);
@@ -28,13 +26,13 @@ bool internalLevelLoop(sf::RenderWindow &win, sf::Vector2f spawnpoint, std::vect
     int frame = 0; 
     sf::IntRect catRect(0,0,180,160), jumpRect(0,0,200,160);
 
-    // --- Переменные для анимации ключа (ВЕРНУЛ НА МЕСТО) ---
+
     bool keyStarted = false;
     bool way = true;
     float keyFrameWidth = 100.f;
     float keySwitchTime = 0.2f;
     sf::Clock keyTimer;
-    int keyFrameIdx = 11; // 12 кадров всего, начинаем с конца, как в оригинале
+    int keyFrameIdx = 11; 
     sf::IntRect keyRect(1100, 0, 100, 200);
 
     while (win.isOpen()) {
@@ -44,7 +42,7 @@ bool internalLevelLoop(sf::RenderWindow &win, sf::Vector2f spawnpoint, std::vect
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) return false;
         }
 
-        // --- АНИМАЦИЯ КЛЮЧА ---
+        
         if (!keyStarted) {
             if (keyTimer.getElapsedTime().asSeconds() > keySwitchTime) {
                 keyRect.left = keyFrameIdx * static_cast<int>(keyFrameWidth);
@@ -66,7 +64,7 @@ bool internalLevelLoop(sf::RenderWindow &win, sf::Vector2f spawnpoint, std::vect
         }
 
         vx = 0;
-        // Увеличил прыжок с -16.0f до -17.5f !
+        
         handleInput(cat, isMoving, vx, vy, onGround, -17.5f, jumpClock); 
         applyPhysics(cat, vy, 0.6f);
         handlePlatformCollisions(cat, platforms, vx, vy, onGround);
@@ -93,19 +91,19 @@ bool internalLevelLoop(sf::RenderWindow &win, sf::Vector2f spawnpoint, std::vect
     return false;
 }
 
-// УРОВЕНЬ 1: Разминка
+
 bool runLevel1(sf::RenderWindow &win, sf::Texture &catTex, sf::Texture &jumpTex, sf::Texture &keyTex, sf::Texture &bgTex, sf::Texture &obj1Tex, sf::Texture &obj2Tex, sf::Texture &spikeTex, sf::Texture &doorTex) {
     std::vector<sf::Sprite> p; std::vector<sf::Sprite> s;
     float screenH = (float)win.getSize().y;
 
-    // Пол: Масштаб 5.0, как в твоем исходнике
+
     p.push_back(createScaledPlatform(0, screenH - 100, 1920, 100, obj1Tex, 5.0f));
 
-    // Ступеньки (масштаб 4.0)
+
     p.push_back(createScaledPlatform(430, screenH - 270, 256, 40, obj2Tex, 4.0f));
     p.push_back(createScaledPlatform(900, screenH - 450, 256, 40, obj2Tex, 4.0f));
 
-    // Оригинальные шипы
+
     sf::Sprite sp = createObject(500, screenH - 164, spikeTex, sf::IntRect(0,0,480,160));
     sp.setScale(0.4f, 0.4f);
     s.push_back(sp);
@@ -119,17 +117,15 @@ bool runLevel1(sf::RenderWindow &win, sf::Texture &catTex, sf::Texture &jumpTex,
     return internalLevelLoop(win, {100, screenH - 200}, p, s, k, d, catTex, jumpTex, bgTex);
 }
 
-// УРОВЕНЬ 2: Стена из платформы
 bool runLevel2(sf::RenderWindow &win, sf::Texture &catTex, sf::Texture &jumpTex, sf::Texture &keyTex, sf::Texture &bgTex, sf::Texture &obj1Tex, sf::Texture &obj2Tex, sf::Texture &spikeTex, sf::Texture &doorTex) {
     std::vector<sf::Sprite> p; std::vector<sf::Sprite> s;
     float screenH = (float)win.getSize().y;
 
     p.push_back(createScaledPlatform(0, screenH - 100, 1920, 100, obj1Tex, 5.0f));
     
-    // Вертикальная стена
+
     p.push_back(createScaledPlatform(700, screenH - 500, 80, 400, obj1Tex, 4.0f)); 
     
-    // Ступеньки для обхода
     p.push_back(createScaledPlatform(300, screenH - 300, 200, 40, obj2Tex, 4.0f));
     p.push_back(createScaledPlatform(500, screenH - 500, 200, 40, obj2Tex, 4.0f));
 
@@ -146,7 +142,7 @@ bool runLevel2(sf::RenderWindow &win, sf::Texture &catTex, sf::Texture &jumpTex,
     return internalLevelLoop(win, {100, screenH - 200}, p, s, k, d, catTex, jumpTex, bgTex);
 }
 
-// УРОВЕНЬ 3: Островки
+
 bool runLevel3(sf::RenderWindow &win, sf::Texture &catTex, sf::Texture &jumpTex, sf::Texture &keyTex, sf::Texture &bgTex, sf::Texture &obj1Tex, sf::Texture &obj2Tex, sf::Texture &spikeTex, sf::Texture &doorTex) {
     std::vector<sf::Sprite> p; std::vector<sf::Sprite> s;
     float screenH = (float)win.getSize().y;
@@ -156,7 +152,6 @@ bool runLevel3(sf::RenderWindow &win, sf::Texture &catTex, sf::Texture &jumpTex,
     p.push_back(createScaledPlatform(850, screenH - 550, 200, 40, obj2Tex, 4.0f));
     p.push_back(createScaledPlatform(1300, screenH - 300, 400, 60, obj1Tex, 4.0f));
 
-    // Шипы на весь низ
     sf::Sprite sp = createObject(250, screenH - 64, spikeTex, sf::IntRect(0,0,2400,160));
     sp.setScale(0.4f, 0.4f);
     s.push_back(sp);

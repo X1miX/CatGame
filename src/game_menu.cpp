@@ -24,16 +24,16 @@ void initGameMenu(GameMenuData& menu, sf::RenderWindow& window, float menux,
   menu.menu_Step = step;
   menu.max_menu = index;
   menu.menu_text_color = sf::Color::White;
-  menu.chose_text_color = sf::Color::Yellow;
+  menu.chose_text_color = sf::Color(150,150,90);
   menu.border_color = sf::Color::Black;
 
-  // Загрузка шрифта
+  
   if (!menu.font.loadFromFile("fonts/troika.otf")) exit(32);
 
-  // Создание массива пунктов меню
+  
   menu.mainMenu = new sf::Text[menu.max_menu];
 
-  // Выстраивание элементов меню
+  
   for (int i = 0, ypos = menu.menu_Y; i < menu.max_menu;
        i++, ypos += menu.menu_Step) {
     setInitText(menu.mainMenu[i], name[i], menu.menu_X, ypos, menu.font,
